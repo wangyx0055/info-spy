@@ -1,0 +1,25 @@
+{
+  "name": "info-spy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "conf.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boxizen/info-spy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/boxizen/info-spy/issues"
+  },
+  "homepage": "https://github.com/boxizen/info-spy#readme",
+  "devDependencies": {
+    "commander": "^2.9.0"
+  }
+}
