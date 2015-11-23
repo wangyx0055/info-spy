@@ -2,18 +2,42 @@
  * @Author: boxizen
  * @Date:   2015-11-19 00:42:01
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-11-20 18:01:22
+ * @Last Modified time: 2015-11-23 15:57:38
  */
 
 'use strict';
 
 var fs = require('fs'),
     path = require('path'),
+    Schedule = require('node-schedule'),
+
+    conf = require('./conf'),
 
     logger = console,
     taskFiles = [],
-    spymans = {};
+    spymans = {},
+    task = {};
 
+
+// 查看域名
+function getTopDomain(url) {
+    var urlPatts = /[^./]+\.(com|cn|net|io)/;
+    return url.match(urlPatts) ? url.match(urlPatts)[0] : null;
+}
+
+// 定时任务
+function cronJob() {
+    var rule = new Schedule.RecurrenceRule(),
+        time = [];
+    for (var i = 1; i <= 60; i++) {
+        time.push(i);
+    }
+    rule.second = time;
+
+    var j = Schedule.scheduleJob(rule, function() {
+        console.log("定时任务~~~");
+    });
+}
 
 // 收集任务文件
 function findTask(path) {
@@ -37,16 +61,16 @@ function findTask(path) {
 // 整理任务
 function arragement() {
 
+    // 文件排序，让_.js文件排在前面
+    taskFiles.sort();
+
     taskFiles.forEach(function(file) {
 
         var mod = require(file + '.js'),
             parts = file.split('/'),
-            domain = parts[1],
-            spider = parts[2],
+            domain = parts[2],
+            spider = parts[3],
             spy = spymans[domain];
-
-        logger.info("----");
-        logger.info(spy);
 
         if (!spy || typeof(spy) == 'undefined') {
             spy = {};
@@ -57,23 +81,44 @@ function arragement() {
     })
 }
 
-// 查看域名
-function getTopDomain(url) {
-    var urlPatts = /[^.]+\.(com|cn|net|io)/;
-    return url.match(urlPatts) ? url.match(urlPatts)[0] : null;
-}
-
-
 // 初始化spy准备工作
 function init() {
     findTask('./spy');
     arragement();
 }
 
-
 // 执行spy任务
 function run(url) {
-    var domain = getTopDomain(url);
+
+    cronJob();
+
+    var domain = getTopDomain(url),
+        theSpy = spymans[domain];
+
+    if (!theSpy || typeof(theSpy) == 'undefined') {
+        logger.info("没有找到合适的特工");
+        return;
+    }
+    var route = theSpy['_'],
+        handleName;
+    if (!route || typeof(route) == 'undefined') {
+        logger.info("匹配路由出错");
+        return;
+    }
+    for (var i = 0; i < route.length; i++) {
+        if (url.match(route[i][0])) {
+            handleName = route[i][1];
+            break;
+        }
+    }
+    if (!handleName || typeof(handleName) == "undefined") {
+        logger.info("没有找到对应处理器");
+        return;
+    }
+
+    var handle = theSpy[handleName];
+    handle(url);
+
 }
 
 

@@ -1,0 +1,14 @@
+{
+    "env": "production",
+    "contractor": {
+        "host": "http://127.0.0.1",
+        "port": 80
+    },
+    "worker": {
+        "count": 8,
+        "timeout": 20000
+    },
+    "cron": {
+        "interval": 120000
+    }
+}
