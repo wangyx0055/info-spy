@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 00:42:01
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-11-23 15:57:38
+ * @Last Modified time: 2015-11-29 20:35:16
  */
 
 'use strict';
@@ -12,11 +12,17 @@ var fs = require('fs'),
     Schedule = require('node-schedule'),
 
     conf = require('./conf'),
+    task = require('./api/task/task'),
+
+    fetch = task.fetch,
 
     logger = console,
     taskFiles = [],
     spymans = {},
-    task = {};
+    task = {},
+    clueQueue = [],
+
+    MAXCLUE = 5;
 
 
 // 查看域名
@@ -32,11 +38,44 @@ function cronJob() {
     for (var i = 1; i <= 60; i++) {
         time.push(i);
     }
-    rule.second = time;
+    rule.minute = time;
 
-    var j = Schedule.scheduleJob(rule, function() {
-        console.log("定时任务~~~");
+    logger.info("获取线索");
+    fetchClue();
+
+    Schedule.scheduleJob(rule, function() {
+        logger.info("获取线索");
+        fetchClue();
     });
+}
+
+// 获取任务
+function fetchClue() {
+
+    if (clueQueue.length < MAXCLUE) {
+        // 抓取任务
+        fetch(function(err, clue) {
+            if (!clue) {
+                return;
+            }
+            clueQueue.push(clue);
+            // 封装任务列表
+            var task = {
+                url: clue.url,
+                done: onTaskDone
+            }
+
+            run(task);
+        })
+
+    } else {
+        logger.info("任务队列已满");
+    }
+}
+
+// 完成任务
+function onTaskDone() {
+
 }
 
 // 收集任务文件
@@ -60,12 +99,9 @@ function findTask(path) {
 
 // 整理任务
 function arragement() {
-
     // 文件排序，让_.js文件排在前面
     taskFiles.sort();
-
     taskFiles.forEach(function(file) {
-
         var mod = require(file + '.js'),
             parts = file.split('/'),
             domain = parts[2],
@@ -75,7 +111,6 @@ function arragement() {
         if (!spy || typeof(spy) == 'undefined') {
             spy = {};
         }
-
         spy[spider] = mod;
         spymans[domain] = spy;
     })
@@ -88,11 +123,16 @@ function init() {
 }
 
 // 执行spy任务
-function run(url) {
+function run(task) {
 
-    cronJob();
+    if (!task) {
+        //fetchClue();
+        cronJob();
+        return;
+    }
 
-    var domain = getTopDomain(url),
+    var url = task.url,
+        domain = getTopDomain(url),
         theSpy = spymans[domain];
 
     if (!theSpy || typeof(theSpy) == 'undefined') {
@@ -117,7 +157,7 @@ function run(url) {
     }
 
     var handle = theSpy[handleName];
-    handle(url);
+    handle(task);
 
 }
 

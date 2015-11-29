@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 00:42:37
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-11-23 15:46:32
+ * @Last Modified time: 2015-11-29 16:33:51
  */
 
 'use strict';
@@ -34,9 +34,16 @@ function start() {
     spy.init();
 
     // 运行spy
-    if (program.url) {        
-        spy.run(program.url);
-    }    
+    if (program.url) {
+        var task = {};
+        task.url = program.url;
+        task.done = function(err, result) {
+            console.log(result.harvest);
+        }
+        spy.run(task);
+    } else {
+        spy.run();
+    }
 }
 
 start();

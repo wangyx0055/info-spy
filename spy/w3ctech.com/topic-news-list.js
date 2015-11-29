@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-20 16:00:08
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-11-23 11:33:29
+ * @Last Modified time: 2015-11-29 16:39:28
  */
 
 'use strict';
@@ -17,13 +17,16 @@ var _ = require('underscore'),
 
     logger = console;
 
-module.exports = function(url) {
+module.exports = function(task) {
     var flower = [],
-        honey = [];
+        honey = [],
+        url = task.url,
+        done = task.done;
 
     var options = {
         url: url
     };
+    
     request(options, function(err, result, body) {
         var $ = cheerio.load(body, {
             decodeEntities: false
@@ -58,5 +61,15 @@ module.exports = function(url) {
             })
 
         })
+
+        // 完成任务
+        task.harvest = {
+            author: 'boxi',
+            tag: '前端',
+            honey: honey,
+            flower: flower
+        };
+        //task.time = context.performance;
+        done(null, task);
     })
 }
