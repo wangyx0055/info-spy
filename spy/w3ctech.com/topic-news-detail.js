@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 17:28:49
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-11-23 15:50:55
+ * @Last Modified time: 2015-11-24 18:18:31
  */
 
 'use strict';
@@ -26,6 +26,7 @@ module.exports = function(url) {
         var $ = cheerio.load(body, {
             decodeEntities: false
         });
+
         var title = $('.topic_info').find('h1').text(),
             img = $('.avatar.latest').attr('src'),
             user = $('.meta_professor').attr('title'),
