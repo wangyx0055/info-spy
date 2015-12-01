@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 00:42:01
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-11-29 20:35:16
+ * @Last Modified time: 2015-12-01 10:40:37
  */
 
 'use strict';
@@ -13,13 +13,12 @@ var fs = require('fs'),
 
     conf = require('./conf'),
     task = require('./api/task/task'),
+    harvest = require('./api/harvest/harvest'),
 
-    fetch = task.fetch,
-
-    logger = console,
     taskFiles = [],
     spymans = {},
-    task = {},
+    logger = console,
+
     clueQueue = [],
 
     MAXCLUE = 5;
@@ -34,48 +33,55 @@ function getTopDomain(url) {
 // 定时任务
 function cronJob() {
     var rule = new Schedule.RecurrenceRule(),
-        time = [];
-    for (var i = 1; i <= 60; i++) {
-        time.push(i);
-    }
-    rule.minute = time;
+        time = [10, 20, 30, 40, 50, 60];
 
-    logger.info("获取线索");
-    fetchClue();
-
+    rule.second = time;
     Schedule.scheduleJob(rule, function() {
-        logger.info("获取线索");
-        fetchClue();
+        var crtClue = clueQueue.shift();
+        if (typeof(crtClue) != 'undefined') {
+            run({
+                oid: crtClue.objectId,
+                eid: crtClue.eid,
+                tag: crtClue.tag,
+                url: crtClue.url,
+                done: onTaskDone
+            });
+        }
+        if (clueQueue.length < MAXCLUE) {
+            fetchClue();
+        } else {
+            logger.info("任务队列已满");
+        }
     });
 }
 
 // 获取任务
 function fetchClue() {
-
-    if (clueQueue.length < MAXCLUE) {
-        // 抓取任务
-        fetch(function(err, clue) {
-            if (!clue) {
-                return;
-            }
-            clueQueue.push(clue);
-            // 封装任务列表
-            var task = {
-                url: clue.url,
-                done: onTaskDone
-            }
-
-            run(task);
-        })
-
-    } else {
-        logger.info("任务队列已满");
-    }
+    var fetch = task.fetch;
+    fetch(function(err, clue) {
+        if (!clue) {
+            logger.info("没有收到新任务");
+        }
+        clueQueue.push(clue);
+        var crtClue = clueQueue.shift();
+        run({
+            oid: crtClue.objectId,
+            eid: crtClue.eid,
+            tag: crtClue.tag,
+            url: crtClue.url,
+            done: onTaskDone
+        });
+    })
 }
 
 // 完成任务
-function onTaskDone() {
-
+function onTaskDone(err, task) {
+    if (err) {
+        logger.info(err);
+        return;
+    }
+    logger.info("队列元素数量:" + clueQueue.length);
+    harvest(task);
 }
 
 // 收集任务文件
@@ -126,7 +132,6 @@ function init() {
 function run(task) {
 
     if (!task) {
-        //fetchClue();
         cronJob();
         return;
     }
