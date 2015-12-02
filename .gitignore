@@ -7,3 +7,5 @@ node_modules
 # IDEA
 .idea/
 
+# spy files
+spy/
