@@ -1,32 +1,28 @@
 /* 
  * @Author: boxizen
- * @Date:   2015-11-29 16:46:01
+ * @Date:   2015-12-01 14:04:34
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-01 10:41:58
+ * @Last Modified time: 2015-12-01 14:48:21
  */
 
 'use strict';
 
 var _ = require('underscore'),
     request = require('request'),
+    conf = require('../../conf'),
+    logger = console;
 
-    conf = require('../../conf');
-
-function harvest(task) {
-    // 服务器配置
+function create(task, callback) {
     var contractor = conf.contractor,
         host = contractor.host,
         port = contractor.port,
-        url = 'http://' + host + ':' + port + '/api/task/harvest';
+        url = 'http://' + host + ':' + port + '/api/harvest/onCreate';
 
     request({
-        method: 'PUT',
+        method: 'put',
         url: url,
-        //timeout: 10000,
         json: true,
         body: task
-    }, function(err, res, body) {
-        
-    });
+    }, function(err, res, body) {});
 }
-module.exports = harvest;
+exports.create = create;

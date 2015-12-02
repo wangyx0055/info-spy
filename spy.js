@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 00:42:01
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-01 10:40:37
+ * @Last Modified time: 2015-12-02 15:04:16
  */
 
 'use strict';
@@ -12,7 +12,7 @@ var fs = require('fs'),
     Schedule = require('node-schedule'),
 
     conf = require('./conf'),
-    task = require('./api/task/task'),
+    clue = require('./api/clue/clue'),
     harvest = require('./api/harvest/harvest'),
 
     taskFiles = [],
@@ -57,16 +57,20 @@ function cronJob() {
 
 // 获取任务
 function fetchClue() {
-    var fetch = task.fetch;
+    var fetch = clue.fetch;
     fetch(function(err, clue) {
+        if(err) {
+            logger.info(err);
+            return;
+        }
         if (!clue) {
             logger.info("没有收到新任务");
+            return;
         }
         clueQueue.push(clue);
         var crtClue = clueQueue.shift();
         run({
             oid: crtClue.objectId,
-            eid: crtClue.eid,
             tag: crtClue.tag,
             url: crtClue.url,
             done: onTaskDone
@@ -81,7 +85,7 @@ function onTaskDone(err, task) {
         return;
     }
     logger.info("队列元素数量:" + clueQueue.length);
-    harvest(task);
+    harvest.create(task);
 }
 
 // 收集任务文件

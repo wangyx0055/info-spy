@@ -2,21 +2,22 @@
  * @Author: boxizen
  * @Date:   2015-11-29 16:45:53
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-11-29 20:34:58
+ * @Last Modified time: 2015-12-02 15:07:35
  */
 
 'use strict';
 
 var _ = require('underscore'),
     request = require('request'),
+    conf = require('../../conf'),
 
-    conf = require('../../conf');
+    logger = console;
 
 function fetch(callback) {
     var contractor = conf.contractor,
         host = contractor.host,
         port = contractor.port,
-        url = 'http://' + host + ':' + port + '/api/clue/fetchClue';
+        url = 'http://' + host + ':' + port + '/api/clue/onGetList';
 
     request({
         method: 'GET',
@@ -24,6 +25,10 @@ function fetch(callback) {
         //timeout: 10000,
         json: true
     }, function(err, res, clue) {
+        if(err || !clue) {
+            callback("服务器异常", null);
+            return;
+        }
         callback(null, clue.length > 0 ? clue[0] : null);
     });
 }

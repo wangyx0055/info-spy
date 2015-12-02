@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-20 16:00:08
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-11-29 16:39:28
+ * @Last Modified time: 2015-12-01 16:38:52
  */
 
 'use strict';
@@ -23,10 +23,12 @@ module.exports = function(task) {
         url = task.url,
         done = task.done;
 
+    var domain = "http://www.w3ctech.com";
+
     var options = {
         url: url
     };
-    
+
     request(options, function(err, result, body) {
         var $ = cheerio.load(body, {
             decodeEntities: false
@@ -35,29 +37,9 @@ module.exports = function(task) {
 
         _.each(listItem, function(item) {
 
-            var title = $(item).find('.title').text(),
-                link = $(item).find('.title').attr('href'),
-                img = $(item).find('.latest').find('img').attr('src'),
-                author = $(item).find('.latest').find('img').attr('title'),
-                category = $(item).find('.badge_category').text(),
-                cateLink = $(item).find('.badge_category').attr('href'),
-                watch = $(item).find('.number').text(),
-                like = $(item).find('.likes_num').text(),
-                date = $(item).find('.relative-date').text();
-
-            var honeyData = {};
-            honeyData.title = title;
-            honeyData.img = img;
-            honeyData.author = author;
-            honeyData.category = category;
-            honeyData.cateLink = cateLink;
-            honeyData.watch = watch;
-            honeyData.like = like;
-            honeyData.date = date;
-
-            honey.push(honeyData);
+            var link = $(item).find('.title').attr('href');
             flower.push({
-                url: link
+                url: link.match(/http/) ? link : domain + link
             })
 
         })
