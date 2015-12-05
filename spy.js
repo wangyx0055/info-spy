@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 00:42:01
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-02 16:09:11
+ * @Last Modified time: 2015-12-05 22:19:33
  */
 
 'use strict';
@@ -58,23 +58,25 @@ function cronJob() {
 // 获取任务
 function fetchClue() {
     var fetch = clue.fetch;
-    fetch(function(err, clue) {
-        if(err) {
+    fetch(function(err, clues) {
+        if (err) {
             logger.info(err);
             return;
         }
-        if (!clue) {
+        if (!clues) {
             logger.info("没有收到新任务");
             return;
         }
-        clueQueue.push(clue);
-        var crtClue = clueQueue.shift();
-        run({
-            oid: crtClue.objectId,
-            tag: crtClue.tag,
-            url: crtClue.url,
-            done: onTaskDone
-        });
+        clues.forEach(function(clue) {
+            clueQueue.push(clue);
+            var crtClue = clueQueue.shift();
+            run({
+                oid: crtClue.objectId,
+                tag: crtClue.tag,
+                url: crtClue.url,
+                done: onTaskDone
+            });
+        })
     })
 }
 
