@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 00:42:37
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-05 22:22:02
+ * @Last Modified time: 2015-12-06 21:06:38
  */
 
 'use strict';
@@ -63,6 +63,10 @@ function start() {
     if (!cluster.isMaster) {
         spy.run();
     }
+
+    app.listen(3000, function() {
+        console.log('Node app is running, port: 3000');
+    });
 }
 
 start();
