@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 00:42:01
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-05 22:19:33
+ * @Last Modified time: 2015-12-06 23:42:10
  */
 
 'use strict';
@@ -169,7 +169,6 @@ function run(task) {
 
     var handle = theSpy[handleName];
     handle(task);
-
 }
 
 
