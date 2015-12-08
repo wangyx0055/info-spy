@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-20 16:00:08
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-01 16:38:52
+ * @Last Modified time: 2015-12-09 00:13:03
  */
 
 'use strict';
@@ -49,7 +49,8 @@ module.exports = function(task) {
             author: 'boxi',
             tag: '前端',
             honey: honey,
-            flower: flower
+            flower: flower,
+            category: 1
         };
         //task.time = context.performance;
         done(null, task);

@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-01 14:04:34
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-01 14:48:21
+ * @Last Modified time: 2015-12-09 00:20:12
  */
 
 'use strict';
@@ -17,7 +17,7 @@ function create(task, callback) {
         host = contractor.host,
         port = contractor.port,
         url = 'http://' + host + ':' + port + '/api/harvest/onCreate';
-
+    
     request({
         method: 'put',
         url: url,
