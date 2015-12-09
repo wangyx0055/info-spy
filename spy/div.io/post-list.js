@@ -1,9 +1,9 @@
 /* 
- * @Author: boxizen
- * @Date:   2015-11-20 16:00:08
- * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-09 11:17:29
- */
+* @Author: boxizen
+* @Date:   2015-12-09 19:38:02
+* @Last Modified by:   boxizen
+* @Last Modified time: 2015-12-09 19:44:58
+*/
 
 'use strict';
 
@@ -22,8 +22,6 @@ module.exports = function(task) {
         url = task.url,
         done = task.done;
 
-    var domain = "http://www.w3ctech.com";
-
     var options = {
         url: url
     };
@@ -32,15 +30,21 @@ module.exports = function(task) {
         var $ = cheerio.load(body, {
             decodeEntities: false
         });
-        var listItem = $('.topic_list').find('.topic_list_content');
 
-        _.each(listItem, function(item) {
-
+        var list = $('.hot-topics').find('ul').eq(0).find('li');
+        _.each(list, function(item) {
             var link = $(item).find('.title').attr('href');
             flower.push({
-                url: link.match(/http/) ? link : domain + link
+                url: link
             })
+        })
 
+        var pagList = $('.pagination').find('li').find('a');
+        _.each(pagList, function(item) {
+        	var link = $(item).attr('href');
+            flower.push({
+                url: link
+            })
         })
 
         // 完成任务
@@ -51,7 +55,7 @@ module.exports = function(task) {
             flower: flower,
             category: 1
         };
-        //task.time = context.performance;
+
         done(null, task);
     })
 }

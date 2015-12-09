@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 17:28:49
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-09 01:25:24
+ * @Last Modified time: 2015-12-09 13:52:10
  */
 
 'use strict';
@@ -13,7 +13,8 @@ var _ = require('underscore'),
     iconv = require('iconv-lite'),
     cheerio = require('cheerio'),
     url = require('url'),
-    imgUtil = require('../../components/img/img'),
+
+    date = require('../../components/date/date'),    
 
     logger = console;
 
@@ -34,14 +35,20 @@ module.exports = function(task) {
             user = $('.meta_professor').attr('title'),
             pubdate = $('.topic_date').text(),
             like = $('.likes_num').text(),
-            content = $('.callout').html();
+            content = $('.callout').html(),
+            time = $('.topic_info').find('time').attr('title'),
+            timeLabel = $('.topic_info').find('time').text();
 
+        var pubdate = new Date(time).valueOf();
+        
         honey.title = title;
         honey.img = img;
         honey.user = user;
         honey.date = pubdate;
         honey.like = like;
+        honey.timeLabel = timeLabel;
         honey.content = content;
+        honey.from = 'w3ctech';        
 
         // 完成任务
         task.harvest = {
@@ -49,7 +56,8 @@ module.exports = function(task) {
             tag: '前端',
             honey: honey,
             flower: flower,
-            category: '1'
+            category: 1,
+            publishAt: pubdate
         };
         //task.time = context.performance;
         done(null, task);

@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-02 15:41:53
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-09 00:31:56
+ * @Last Modified time: 2015-12-09 11:17:43
  */
 
 'use strict';
@@ -13,7 +13,6 @@ var _ = require('underscore'),
     iconv = require('iconv-lite'),
     cheerio = require('cheerio'),
     url = require('url'),
-    imgUtil = require('../../components/img/img'),
 
     logger = console;
 
