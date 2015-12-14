@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-09 19:38:11
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-09 20:22:53
+ * @Last Modified time: 2015-12-09 20:46:03
  */
 
 'use strict';
@@ -18,7 +18,7 @@ var _ = require('underscore'),
 
 module.exports = function(task) {
     var flower = [],
-        honey = [],
+        honey = {},
         url = task.url,
         done = task.done;
 
@@ -67,7 +67,8 @@ module.exports = function(task) {
             tag: '前端',
             honey: honey,
             flower: flower,
-            category: 1
+            category: 1,
+            publishAt: pubdate
         };
 
         done(null, task);

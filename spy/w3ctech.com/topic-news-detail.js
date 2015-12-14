@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 17:28:49
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-09 13:52:10
+ * @Last Modified time: 2015-12-09 20:34:35
  */
 
 'use strict';
@@ -14,7 +14,7 @@ var _ = require('underscore'),
     cheerio = require('cheerio'),
     url = require('url'),
 
-    date = require('../../components/date/date'),    
+    date = require('../../components/date/date'),
 
     logger = console;
 
@@ -40,7 +40,7 @@ module.exports = function(task) {
             timeLabel = $('.topic_info').find('time').text();
 
         var pubdate = new Date(time).valueOf();
-        
+
         honey.title = title;
         honey.img = img;
         honey.user = user;
@@ -48,7 +48,7 @@ module.exports = function(task) {
         honey.like = like;
         honey.timeLabel = timeLabel;
         honey.content = content;
-        honey.from = 'w3ctech';        
+        honey.from = 'w3ctech';
 
         // 完成任务
         task.harvest = {
