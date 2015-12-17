@@ -1,8 +1,8 @@
 /* 
  * @Author: boxizen
- * @Date:   2015-12-12 00:15:28
+ * @Date:   2015-12-14 20:30:11
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-14 18:26:45
+ * @Last Modified time: 2015-12-14 21:18:46
  */
 
 'use strict';
@@ -17,32 +17,38 @@ var _ = require('underscore'),
     logger = console;
 
 module.exports = function(task) {
+
     var flower = [],
         url = task.url,
         done = task.done;
 
-    request(url, function(err, res, body) {
+    var options = {
+        url: url
+    };
 
+    request(options, function(err, result, body) {
         var $ = cheerio.load(body, {
             decodeEntities: false
         });
 
-        var link = $('.news_textList_top').find('.news_textList_section').find('.news_textList_section_title');
+        var linkArr = $('.posts-list').find('.new-post-item-content');
 
-        _.each(link, function(item) {
-            var itemLink = $(item).find('a').attr('href');
+        _.each(linkArr, function(item) {
+            var link = $(item).find('.news-pic').attr('href');
             flower.push({
-                url: itemLink
+                url: link
             })
         })
 
         // 完成任务
         task.harvest = {
             author: 'boxi',
-            tag: '娱乐',
+            tag: '科技',
             flower: flower,
-            category: 2
+            category: 3,
+            from: 'ifanr'
         };
+
         done(null, task);
     })
 }
