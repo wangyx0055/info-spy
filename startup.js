@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 00:42:37
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-06 23:41:18
+ * @Last Modified time: 2015-12-17 15:15:23
  */
 
 'use strict';
@@ -16,6 +16,7 @@ var program = require('commander'),
 
     cpus = OS.cpus().length,
     maxClusterCount = cpus * 2,
+    SINGLEMODE = 1,
 
     logger = console;
 
@@ -40,7 +41,7 @@ function start() {
 
     // 生产模式下启用多线程
     if (!program.url && cluster.isMaster) {
-        for (var i = 0; i < 1; i++) {
+        for (var i = 0; i < SINGLEMODE; i++) {
             cluster.fork();
         }
         cluster.on('exit', function() {
@@ -57,11 +58,16 @@ function start() {
             console.log(result.harvest);
         }
         spy.run(task);
-    }
-
-    // 启动子线程
-    if (!cluster.isMaster) {
-        spy.run();
+    } else {
+        // 启动子线程
+        if (!cluster.isMaster) {
+            spy.run();
+        }
+        // 主线程启动定时任务
+        else {
+            var cron = require('./cron');
+            cron.cronJob();
+        }
     }
 }
 

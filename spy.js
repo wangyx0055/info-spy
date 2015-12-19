@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-11-19 00:42:01
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-13 15:26:21
+ * @Last Modified time: 2015-12-17 14:52:56
  */
 
 'use strict';
@@ -86,7 +86,6 @@ function onTaskDone(err, task) {
         logger.info(err);
         return;
     }
-    logger.info("队列元素数量:" + clueQueue.length);
     harvest.create(task);
 }
 
@@ -174,5 +173,6 @@ function run(task) {
 
 module.exports = {
     init: init,
-    run: run
+    run: run,
+    onTaskDone: onTaskDone
 }
