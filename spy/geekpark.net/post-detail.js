@@ -2,7 +2,7 @@
 * @Author: boxizen
 * @Date:   2015-12-14 19:30:04
 * @Last Modified by:   boxizen
-* @Last Modified time: 2015-12-14 20:25:10
+* @Last Modified time: 2015-12-20 15:48:03
 */
 
 'use strict';
@@ -59,7 +59,7 @@ module.exports = function(task) {
             honey: honey,
             flower: flower,
             category: 301,
-            publishAt: new Date(pubdate)
+            publishAt: new Date(pubdate).valueOf()
         };
 
         done(null, task);

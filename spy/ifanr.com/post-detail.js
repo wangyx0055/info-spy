@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-14 20:29:51
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-19 23:59:37
+ * @Last Modified time: 2015-12-20 15:47:52
  */
 
 'use strict';
@@ -42,7 +42,7 @@ module.exports = function(task) {
         honey.coverPic = coverPic;
         honey.user = user;
         honey.img = null,
-            honey.content = content;
+        honey.content = content;
         honey.date = new Date(pubdate).valueOf();
         honey.from = 'ifanr';
         honey.timeLabel = timeLabel;
@@ -54,7 +54,7 @@ module.exports = function(task) {
             honey: honey,
             flower: flower,
             category: 3,
-            publishAt: new Date(pubdate)
+            publishAt: new Date(pubdate).valueOf()
         };
 
         done(null, task);
