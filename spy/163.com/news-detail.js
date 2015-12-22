@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-12 00:15:35
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-13 21:05:01
+ * @Last Modified time: 2015-12-20 20:59:17
  */
 
 'use strict';
@@ -73,7 +73,6 @@ module.exports = function(task) {
         honey.title = title;
         honey.user = '网易娱乐';
         honey.date = pubdate;
-        honey.like = like;
         honey.timeLabel = yearLabel;
         honey.content = $.html();
         honey.from = '网易娱乐';
