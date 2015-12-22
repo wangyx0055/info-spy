@@ -2,7 +2,7 @@
 * @Author: boxizen
 * @Date:   2015-12-22 21:06:41
 * @Last Modified by:   boxizen
-* @Last Modified time: 2015-12-22 21:09:47
+* @Last Modified time: 2015-12-23 00:15:19
 */
 
 'use strict';
@@ -26,6 +26,9 @@ module.exports = function(task) {
         url: url
     };
 
+    var domain = 'http://cdc.tencent.com/?paged=',
+        MAXPAGE = 10;
+
     request(options, function(err, result, body) {
         var $ = cheerio.load(body, {
             decodeEntities: false
@@ -39,6 +42,22 @@ module.exports = function(task) {
                 url: link
             })
         })
+
+        // http://cdc.tencent.com/?paged=3
+
+        var nextPage = 2;
+
+        if (task.url.match(/paged=\d+/)) {
+            nextPage = parseInt(task.url.match(/\d+/)[0]) + 1;
+        }
+
+        // 添加下一页
+        if (nextPage <= MAXPAGE) {
+            flower.push({
+                url: domain + nextPage
+            })
+        }
+
 
         // 完成任务
         task.harvest = {
