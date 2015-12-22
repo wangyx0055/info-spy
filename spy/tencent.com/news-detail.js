@@ -1,8 +1,8 @@
 /* 
 * @Author: boxizen
-* @Date:   2015-12-22 19:58:41
+* @Date:   2015-12-22 21:11:22
 * @Last Modified by:   boxizen
-* @Last Modified time: 2015-12-22 21:18:01
+* @Last Modified time: 2015-12-22 21:21:58
 */
 
 'use strict';
@@ -30,33 +30,32 @@ module.exports = function(task) {
             decodeEntities: false
         });
 
-        var title = $('.post-title').text(),
-            coverPic = $('img.alignnone').attr('src'),
-            user = null,
-            userImg = $('.author-head').html(),
-            content = $('.entry-content').html(),
-            pubdate = $('.published').text(),
-            timeLabel = $('.published').text();
+        var title = $('＃content').find('.title').text(),
+            coverPic = $('.content_banner img').attr('src'),
+            //user = $('a[title="Posts by homme"]').text(),
+            content = $('.content_banner').find('.text').html(),
+            //pubdate = $('span[itemprop="datePublished"]').attr('datetime'),
+            //timeLabel = pubdate.split('T')[0];
 
         $ = cheerio.load(content, {
             decodeEntities: false
         });
 
         // 删除一些不必要的信息
-        $('.post-copyright').remove();
-        $('.similarity').remove();
-        $('.wumii-hook').remove();
+        $('.appendInfo').remove();
+        $('.commentform').remove();
+        $('.script').remove();
         $('style').remove();
 
         // 赋值
         honey.title = title;
         honey.coverPic = coverPic;
-        honey.user = user;
-        honey.img = userImg,
-        honey.content = $.html();
-        honey.date = new Date(pubdate).valueOf();
-        honey.from = '优设网';
-        honey.timeLabel = timeLabel;
+        //honey.user = user;
+        //honey.img = null,
+        honey.content = content;
+        //honey.date = new Date(pubdate).valueOf();
+        honey.from = '腾讯设计';
+        //honey.timeLabel = timeLabel;
 
         // 完成任务
         task.harvest = {
@@ -65,7 +64,7 @@ module.exports = function(task) {
             honey: honey,
             flower: flower,
             category: 4,
-            publishAt: new Date(pubdate).valueOf()
+            //publishAt: new Date(pubdate).valueOf()
         };
 
         done(null, task);
