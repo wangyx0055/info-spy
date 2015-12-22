@@ -2,7 +2,7 @@
 * @Author: boxizen
 * @Date:   2015-12-22 19:58:41
 * @Last Modified by:   boxizen
-* @Last Modified time: 2015-12-22 21:18:01
+* @Last Modified time: 2015-12-22 23:25:50
 */
 
 'use strict';
@@ -33,7 +33,7 @@ module.exports = function(task) {
         var title = $('.post-title').text(),
             coverPic = $('img.alignnone').attr('src'),
             user = null,
-            userImg = $('.author-head').html(),
+            userImg = null,
             content = $('.entry-content').html(),
             pubdate = $('.published').text(),
             timeLabel = $('.published').text();
