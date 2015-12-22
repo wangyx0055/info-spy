@@ -2,7 +2,7 @@
 * @Author: boxizen
 * @Date:   2015-12-22 21:11:22
 * @Last Modified by:   boxizen
-* @Last Modified time: 2015-12-23 00:10:57
+* @Last Modified time: 2015-12-23 00:23:24
 */
 
 'use strict';
@@ -30,7 +30,7 @@ module.exports = function(task) {
             decodeEntities: false
         });
 
-        var title = $('＃content').find('.title').text(),
+        var title = $('#content').find('.title').find('h3').text(),
             coverPic = $('.content_banner img').attr('src'),
             user = $('.title').find('p').text().split('/')[0].replace(/ /g,''),
             userImg = $('.title').find('a').eq(0).find('img').attr('src'),
