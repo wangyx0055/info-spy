@@ -1,8 +1,8 @@
 /* 
 * @Author: boxizen
-* @Date:   2015-12-14 19:30:04
+* @Date:   2015-12-23 23:52:48
 * @Last Modified by:   boxizen
-* @Last Modified time: 2015-12-23 11:28:48
+* @Last Modified time: 2015-12-24 00:13:30
 */
 
 'use strict';
@@ -30,35 +30,46 @@ module.exports = function(task) {
             decodeEntities: false
         });
 
-        var title = $('.topic-title').text(),
-        	coverPic = $('.main-pic').find('img').attr('src'),
-        	user = $('.topic-info').find('.author').find('span').text(),
-        	img = $('.topic-info').find('.author').find('img').attr('src'),
-        	content = $('#article').html(),
-        	pubdate = $('meta[property="article:published_time"]').attr('content');
+        var title = $('#page-title').text(),
+            coverPic = null,
+            user = $('.media-heading').find('a').text(),
+            userImg = $('.blog-author').find('img').attr('src'),
+            content = $('.body-content').html(),
+            pubdate = $('.submitted').find('span').eq(1).text(),
+            timeLabel = $('.submitted').find('span').eq(1).text();
+
+        if(user == '' || typeof(user) == 'undefined') {
+        	user = null;
+        }
+
+        if(userImg == '' || typeof(userImg) == 'undefined') {
+        	userImg = null;
+        }
 
         $ = cheerio.load(content, {
             decodeEntities: false
         });
-        $('.share_top').remove();
+
+        // 删除一些不必要的信息
+        $('.blog-author').remove();
 
         // 赋值
-        honey.title = title;        
-        honey.coverPic = coverPic;        
+        honey.title = title;
+        honey.coverPic = coverPic;
         honey.user = user;
-        honey.img = img,
+        honey.img = userImg,
         honey.content = $.html();
         honey.date = new Date(pubdate).valueOf();
-        honey.from = '极客公园';
-        honey.timeLabel = pubdate;
+        honey.from = 'w3cplus';
+        honey.timeLabel = timeLabel;
 
         // 完成任务
         task.harvest = {
             author: 'boxi',
-            tag: '科技',
+            tag: '前端',
             honey: honey,
             flower: flower,
-            category: 301,
+            category: 1,
             publishAt: new Date(pubdate).valueOf()
         };
 
