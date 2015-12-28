@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-24 15:58:40
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-28 10:19:01
+ * @Last Modified time: 2015-12-28 11:20:10
  */
 
 'use strict';
@@ -25,7 +25,13 @@ module.exports = function(task) {
         url: url,
         headers: {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36',
-            'Referer': 'http://jandan.net/'
+            'Referer': 'http://jandan.net/',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Cookie': '2980115714=78; Hm_lvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451133165,1451235346,1451266798,1451269094; Hm_lpvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451271338; _ga=GA1.2.501299602.1450165971',
+            'Host': 'jandan.net',
+            'Pragma': 'no-cache',
+            'Upgrade-Insecure-Requests': 1
         }
     };
 
@@ -55,14 +61,14 @@ module.exports = function(task) {
         $('.jandan-zan').remove();
         $('.break').remove();
 
-        var fContent = $.html().replace(/data-original="\/\//g,'src="http://');
-        
+        var fContent = $.html().replace(/data-original="\/\//g, 'src="http://');
+
         // 给所有站内图片链接带上proxy标识
-        if(coverPic.indexOf('//') == 0) {
+        if (coverPic.indexOf('//') == 0) {
             coverPic = coverPic.split('//')[1];
         }
 
-        if(coverPic.indexOf('tankr.net')  != -1) {
+        if (coverPic.indexOf('tankr.net') != -1) {
             coverPic = 'proxy/jandan/redirect=' + coverPic;
             honey.external = 1;
         }

@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-24 15:58:35
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-28 10:17:24
+ * @Last Modified time: 2015-12-28 11:09:58
  */
 
 'use strict';
@@ -25,7 +25,14 @@ module.exports = function(task) {
     var options = {
         url: url,
         headers: {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',            
+            'Cookie': '2980115714=78; Hm_lvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451133165,1451235346,1451266798,1451269094; Hm_lpvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451271338; _ga=GA1.2.501299602.1450165971',
+            'Host': 'jandan.net',
+            'Pragma': 'no-cache',
+            'Upgrade-Insecure-Requests': 1,
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36',
         }
     };
 
