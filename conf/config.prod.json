@@ -1,7 +1,7 @@
 {
     "env": "production",
     "contractor": {
-        "host": "localhost",
+        "host": "42.96.148.52",
         "port": 4000
     },
     "worker": {

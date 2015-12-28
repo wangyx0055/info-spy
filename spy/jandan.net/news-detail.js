@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-24 15:58:40
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-28 09:49:52
+ * @Last Modified time: 2015-12-28 10:19:01
  */
 
 'use strict';
@@ -24,7 +24,8 @@ module.exports = function(task) {
     var options = {
         url: url,
         headers: {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36',
+            'Referer': 'http://jandan.net/'
         }
     };
 
@@ -56,6 +57,7 @@ module.exports = function(task) {
 
         var fContent = $.html().replace(/data-original="\/\//g,'src="http://');
         
+        // 给所有站内图片链接带上proxy标识
         if(coverPic.indexOf('//') == 0) {
             coverPic = coverPic.split('//')[1];
         }
@@ -65,6 +67,7 @@ module.exports = function(task) {
             honey.external = 1;
         }
 
+        fContent = fContent.replace(/http:\/\/tankr.net/g, 'proxy/jandan/redirect=tankr.net');
         // 赋值
         honey.title = title;
         honey.coverPic = coverPic;
