@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-24 15:58:40
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-24 17:03:12
+ * @Last Modified time: 2015-12-28 09:49:52
  */
 
 'use strict';
@@ -55,10 +55,19 @@ module.exports = function(task) {
         $('.break').remove();
 
         var fContent = $.html().replace(/data-original="\/\//g,'src="http://');
+        
+        if(coverPic.indexOf('//') == 0) {
+            coverPic = coverPic.split('//')[1];
+        }
+
+        if(coverPic.indexOf('tankr.net')  != -1) {
+            coverPic = 'proxy/jandan/redirect=' + coverPic;
+            honey.external = 1;
+        }
 
         // 赋值
         honey.title = title;
-        honey.coverPic = coverPic.match(/http:/) ? 'http:' + coverPic : coverPic;
+        honey.coverPic = coverPic;
         honey.user = user;
         honey.img = null;
         honey.content = fContent;
