@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-24 15:58:40
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-28 11:20:10
+ * @Last Modified time: 2015-12-28 11:36:46
  */
 
 'use strict';
@@ -28,7 +28,6 @@ module.exports = function(task) {
             'Referer': 'http://jandan.net/',
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive',
-            'Cookie': '2980115714=78; Hm_lvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451133165,1451235346,1451266798,1451269094; Hm_lpvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451271338; _ga=GA1.2.501299602.1450165971',
             'Host': 'jandan.net',
             'Pragma': 'no-cache',
             'Upgrade-Insecure-Requests': 1

@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-24 15:58:35
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-28 11:09:58
+ * @Last Modified time: 2015-12-28 11:36:00
  */
 
 'use strict';
@@ -28,7 +28,6 @@ module.exports = function(task) {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive',            
-            'Cookie': '2980115714=78; Hm_lvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451133165,1451235346,1451266798,1451269094; Hm_lpvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451271338; _ga=GA1.2.501299602.1450165971',
             'Host': 'jandan.net',
             'Pragma': 'no-cache',
             'Upgrade-Insecure-Requests': 1,
@@ -40,6 +39,7 @@ module.exports = function(task) {
         MAXPAGE = 10;
 
     request(options, function(err, result, body) {
+
         var $ = cheerio.load(body, {
             decodeEntities: false
         });
