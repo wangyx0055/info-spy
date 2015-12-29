@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-24 15:58:40
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-28 11:36:46
+ * @Last Modified time: 2015-12-28 12:53:19
  */
 
 'use strict';
@@ -30,6 +30,7 @@ module.exports = function(task) {
             'Connection': 'keep-alive',
             'Host': 'jandan.net',
             'Pragma': 'no-cache',
+            'Cookie': '2980115714=23; _ga=GA1.2.501299602.1450165971; _gat=1; Hm_lvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451269094,1451273929,1451275254,1451278335; Hm_lpvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451278335',
             'Upgrade-Insecure-Requests': 1
         }
     };

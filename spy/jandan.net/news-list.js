@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2015-12-24 15:58:35
  * @Last Modified by:   boxizen
- * @Last Modified time: 2015-12-28 11:36:00
+ * @Last Modified time: 2015-12-28 12:56:48
  */
 
 'use strict';
@@ -31,6 +31,7 @@ module.exports = function(task) {
             'Host': 'jandan.net',
             'Pragma': 'no-cache',
             'Upgrade-Insecure-Requests': 1,
+            'Cookie': '2980115714=23; _ga=GA1.2.501299602.1450165971; _gat=1; Hm_lvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451269094,1451273929,1451275254,1451278335; Hm_lpvt_fd93b7fb546adcfbcf80c4fc2b54da2c=1451278335',
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36',
         }
     };
