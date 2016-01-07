@@ -2,7 +2,7 @@
  * @Author: boxizen
  * @Date:   2016-01-07 23:30:13
  * @Last Modified by:   boxizen
- * @Last Modified time: 2016-01-07 23:56:51
+ * @Last Modified time: 2016-01-08 00:04:19
  */
 
 'use strict';
@@ -32,7 +32,7 @@ module.exports = function(task) {
 
         var title = $('.single-post__title').text(),
             coverPic = null,
-            user = null,
+            user = '娱乐头条',
             userImg = null,
             content = $('.content-wrapper').find('.article').html();
 
