@@ -6,6 +6,8 @@ var _ = require('underscore'),
     iconv = require('iconv-lite'),
     cheerio = require('cheerio'),
     url = require('url'),
+    util = require('./util.js'),
+
     logger = console;
 
 module.exports = function(task) {
@@ -24,12 +26,8 @@ module.exports = function(task) {
             user = $('.banner').find('.info').find('.author').text().replace(/ /g, '').replace(/\n/g, ''),
             content = $('.main').find('.box').find('.content').html();
         var timeLabel = $('.publish-time').eq(0).text().replace(/ /g, '').replace(/\n/g, ''),
-            pubdate = '';
-        if (timeLabel.match(/\d+-\d+-\d+/)) {
-            pubdate = new Date(timeLabel).valueOf();
-        } else {
-            pubdate = new Date().valueOf();
-        }
+            pubdate = util.getTimeLabel(timeLabel);
+        
 
         // 赋值
         honey.title = title;
