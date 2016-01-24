@@ -37,7 +37,7 @@ module.exports = function(task) {
         honey.content = content;
         honey.date = new Date(pubdate).valueOf();
         honey.from = '少数派';
-        honey.timeLabel = timeLabel;
+        honey.timeLabel = pubdate;
 
         // 完成任务
         task.harvest = {
